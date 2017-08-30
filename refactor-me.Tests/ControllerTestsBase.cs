@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using refactor_me.Controllers;
-using refactor_me.Models;
+using Refactor_me.Controllers;
+using Refactor_me.Models;
 
-namespace refactor_me.Tests
+namespace Refactor_me.Tests
 {
     public class ControllerTestsBase
     {

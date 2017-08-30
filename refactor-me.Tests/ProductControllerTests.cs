@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using refactor_me.Models;
+using Refactor_me.Models;
 
-namespace refactor_me.Tests
+namespace Refactor_me.Tests
 {
     [TestClass]
     public class ProductControllerTests : ControllerTestsBase

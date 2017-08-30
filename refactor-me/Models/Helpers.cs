@@ -3,11 +3,12 @@ using System.IO;
 using System.Reflection;
 using System.Web;
 
-namespace refactor_me.Models
+namespace Refactor_me.Models
 {
     public class Helpers
     {
-        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataDirectory}\{DatabaseName};Integrated Security=True";
+        private const string ConnectionString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataDirectory}\{DatabaseName};Integrated Security=True";
 
         public static SqlConnection NewConnection()
         {
