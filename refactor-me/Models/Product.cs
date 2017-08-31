@@ -20,7 +20,9 @@ namespace Refactor_me.Models
             _connection.Open();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = $"select * from product where id = '{id}'";
+                command.CommandText = @"select * from product where id = @id";
+                Helpers.AddParameter(command, "id", id);
+
                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -92,7 +94,8 @@ namespace Refactor_me.Models
             _connection.Open();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = $"delete from product where id = '{Id}'";
+                command.CommandText = @"delete from product where id = @id";
+                Helpers.AddParameter(command, "id", Id);
                 command.ExecuteNonQuery();
             }
 
@@ -107,14 +110,19 @@ namespace Refactor_me.Models
                 if (IsNew)
                 {
                     command.CommandText =
-                        $"insert into product (id, name, description, price, deliveryprice) values ('{Id}', '{Name}', '{Description}', {Price}, {DeliveryPrice})";
+                        @"insert into product (id, name, description, price, deliveryprice) values (@Id, @Name, @Description, @Price, @DeliveryPrice)";
                 }
                 else
                 {
                     command.CommandText =
-                        $"update product set name = '{Name}', description = '{Description}', price = {Price}, deliveryprice = {DeliveryPrice} where id = '{Id}'";
+                        @"update product set name = @Name, description = @Description, price = @Price, deliveryprice = @DeliveryPrice where id = @Id";
                 }
 
+                Helpers.AddParameter(command, "Id", Id);
+                Helpers.AddParameter(command, "Name", Name);
+                Helpers.AddParameter(command, "Description", Description);
+                Helpers.AddParameter(command, "Price", Price);
+                Helpers.AddParameter(command, "DeliveryPrice", DeliveryPrice);
                 command.ExecuteNonQuery();
             }
 

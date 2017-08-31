@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Web;
@@ -27,6 +29,24 @@ namespace Refactor_me.Models
 
             var connstr = ConnectionString.Replace("{DataDirectory}", dataDirectory).Replace("{DatabaseName}", databaseName);
             return new SqlConnection(connstr);
+        }
+
+        public static void AddParameter(IDbCommand command, string name, object value)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = name;
+            parameter.Value = value ?? DBNull.Value;
+            command.Parameters.Add(parameter);
         }
     }
 }

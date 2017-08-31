@@ -20,8 +20,8 @@ namespace Refactor_me.Models
             _connection.Open();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = $"select * from productoption where id = '{id}'";
-
+                command.CommandText = @"select * from productoption where id = @id";
+                Helpers.AddParameter(command, "id", id);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -86,7 +86,8 @@ namespace Refactor_me.Models
             _connection.Open();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = $"delete from productoption where id = '{Id}'";
+                command.CommandText = @"delete from productoption where id = @id";
+                Helpers.AddParameter(command, "id", Id);
                 command.ExecuteReader();
             }
 
@@ -101,13 +102,17 @@ namespace Refactor_me.Models
                 if (IsNew)
                 {
                     command.CommandText =
-                        $"insert into productoption (id, productid, name, description) values ('{Id}', '{ProductId}', '{Name}', '{Description}')";
+                        @"insert into productoption (id, productid, name, description) values (@Id, @ProductId, @Name, @Description)";
+                    Helpers.AddParameter(command, "ProductId", ProductId);
                 }
                 else
                 {
-                    command.CommandText = $"update productoption set name = '{Name}', description = '{Description}' where id = '{Id}'";
+                    command.CommandText = @"update productoption set name = @Name, description = @Description where id = @Id";
                 }
 
+                Helpers.AddParameter(command, "Id", Id);
+                Helpers.AddParameter(command, "Name", Name);
+                Helpers.AddParameter(command, "Description", Description);
                 command.ExecuteNonQuery();
             }
 

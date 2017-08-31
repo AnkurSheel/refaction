@@ -8,25 +8,31 @@ namespace Refactor_me.Models
     {
         private readonly IDbConnection _connection = Helpers.NewConnection();
 
+        // TODO : Remove this
         public ProductOptions()
         {
-            LoadProductOptions(null);
+            LoadProductOptions(Guid.Empty);
         }
 
         public ProductOptions(Guid productId)
         {
-            LoadProductOptions($"where productid = '{productId}'");
+            LoadProductOptions(productId);
         }
 
         public List<ProductOption> Items { get; private set; }
 
-        private void LoadProductOptions(string where)
+        private void LoadProductOptions(Guid productId)
         {
             Items = new List<ProductOption>();
             _connection.Open();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = $"select id from productoption {where}";
+                command.CommandText = @"select id from productoption";
+                if (productId != Guid.Empty)
+                {
+                    command.CommandText += @" where productid = @productId";
+                    Helpers.AddParameter(command, "productId", productId);
+                }
 
                 var reader = command.ExecuteReader();
                 while (reader.Read())
