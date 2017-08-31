@@ -32,6 +32,8 @@ namespace refactor_me.Models
                 var id = Guid.Parse(rdr["id"].ToString());
                 Items.Add(new Product(id));
             }
+
+            conn.Close();
         }
     }
 
@@ -104,6 +106,8 @@ namespace refactor_me.Models
             Description = (DBNull.Value == rdr["Description"]) ? null : rdr["Description"].ToString();
             Price = decimal.Parse(rdr["Price"].ToString());
             DeliveryPrice = decimal.Parse(rdr["DeliveryPrice"].ToString());
+
+            conn.Close();
         }
 
         public void Save()
@@ -115,6 +119,7 @@ namespace refactor_me.Models
 
             conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public void Delete()
@@ -126,6 +131,8 @@ namespace refactor_me.Models
             conn.Open();
             var cmd = new SqlCommand($"delete from product where id = '{Id}'", conn);
             cmd.ExecuteNonQuery();
+
+            conn.Close();
         }
     }
 
@@ -156,12 +163,42 @@ namespace refactor_me.Models
                 var id = Guid.Parse(rdr["id"].ToString());
                 Items.Add(new ProductOption(id));
             }
+            conn.Close();
         }
     }
 
     public class ProductOption
     {
         public Guid Id { get; set; }
+
+        protected bool Equals(ProductOption other)
+        {
+            return Id.Equals(other.Id) && ProductId.Equals(other.ProductId) && string.Equals(Name, other.Name) && string.Equals(Description, other.Description);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+
+            return Equals((ProductOption)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ ProductId.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Description != null ? Description.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
 
         public Guid ProductId { get; set; }
 
@@ -187,13 +224,17 @@ namespace refactor_me.Models
 
             var rdr = cmd.ExecuteReader();
             if (!rdr.Read())
+            {
+                conn.Close();
                 return;
+            }
 
             IsNew = false;
             Id = Guid.Parse(rdr["Id"].ToString());
             ProductId = Guid.Parse(rdr["ProductId"].ToString());
             Name = rdr["Name"].ToString();
             Description = (DBNull.Value == rdr["Description"]) ? null : rdr["Description"].ToString();
+            conn.Close();
         }
 
         public void Save()
@@ -205,6 +246,7 @@ namespace refactor_me.Models
 
             conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public void Delete()
@@ -213,6 +255,7 @@ namespace refactor_me.Models
             conn.Open();
             var cmd = new SqlCommand($"delete from productoption where id = '{Id}'", conn);
             cmd.ExecuteReader();
+            conn.Close();
         }
     }
 }
