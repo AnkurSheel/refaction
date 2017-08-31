@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Data;
 using Newtonsoft.Json;
 
 namespace Refactor_me.Models
 {
     public class Product
     {
+        private readonly IDbConnection _connection = Helpers.NewConnection();
+
         public Product()
         {
             Id = Guid.NewGuid();
@@ -15,24 +17,23 @@ namespace Refactor_me.Models
         public Product(Guid id)
         {
             IsNew = true;
-            var conn = Helpers.NewConnection();
-            var cmd = new SqlCommand($"select * from product where id = '{id}'", conn);
-            conn.Open();
-
-            var rdr = cmd.ExecuteReader();
-            if (!rdr.Read())
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
             {
-                return;
+                command.CommandText = $"select * from product where id = '{id}'";
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    IsNew = false;
+                    Id = Guid.Parse(reader["Id"].ToString());
+                    Name = reader["Name"].ToString();
+                    Description = DBNull.Value == reader["Description"] ? null : reader["Description"].ToString();
+                    Price = decimal.Parse(reader["Price"].ToString());
+                    DeliveryPrice = decimal.Parse(reader["DeliveryPrice"].ToString());
+                }
             }
 
-            IsNew = false;
-            Id = Guid.Parse(rdr["Id"].ToString());
-            Name = rdr["Name"].ToString();
-            Description = DBNull.Value == rdr["Description"] ? null : rdr["Description"].ToString();
-            Price = decimal.Parse(rdr["Price"].ToString());
-            DeliveryPrice = decimal.Parse(rdr["DeliveryPrice"].ToString());
-
-            conn.Close();
+            _connection.Close();
         }
 
         public decimal DeliveryPrice { get; set; }
@@ -88,28 +89,36 @@ namespace Refactor_me.Models
                 option.Delete();
             }
 
-            var conn = Helpers.NewConnection();
-            conn.Open();
-            var cmd = new SqlCommand($"delete from product where id = '{Id}'", conn);
-            cmd.ExecuteNonQuery();
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
+            {
+                command.CommandText = $"delete from product where id = '{Id}'";
+                command.ExecuteNonQuery();
+            }
 
-            conn.Close();
+            _connection.Close();
         }
 
         public void Save()
         {
-            var conn = Helpers.NewConnection();
-            var cmd = IsNew
-                          ? new
-                              SqlCommand($"insert into product (id, name, description, price, deliveryprice) values ('{Id}', '{Name}', '{Description}', {Price}, {DeliveryPrice})",
-                                         conn)
-                          : new
-                              SqlCommand($"update product set name = '{Name}', description = '{Description}', price = {Price}, deliveryprice = {DeliveryPrice} where id = '{Id}'",
-                                         conn);
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
+            {
+                if (IsNew)
+                {
+                    command.CommandText =
+                        $"insert into product (id, name, description, price, deliveryprice) values ('{Id}', '{Name}', '{Description}', {Price}, {DeliveryPrice})";
+                }
+                else
+                {
+                    command.CommandText =
+                        $"update product set name = '{Name}', description = '{Description}', price = {Price}, deliveryprice = {DeliveryPrice} where id = '{Id}'";
+                }
 
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                command.ExecuteNonQuery();
+            }
+
+            _connection.Close();
         }
 
         protected bool Equals(Product other)

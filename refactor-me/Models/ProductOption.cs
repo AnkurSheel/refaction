@@ -1,11 +1,13 @@
 using System;
-using System.Data.SqlClient;
+using System.Data;
 using Newtonsoft.Json;
 
 namespace Refactor_me.Models
 {
     public class ProductOption
     {
+        private readonly IDbConnection _connection = Helpers.NewConnection();
+
         public ProductOption()
         {
             Id = Guid.NewGuid();
@@ -15,23 +17,25 @@ namespace Refactor_me.Models
         public ProductOption(Guid id)
         {
             IsNew = true;
-            var conn = Helpers.NewConnection();
-            var cmd = new SqlCommand($"select * from productoption where id = '{id}'", conn);
-            conn.Open();
-
-            var rdr = cmd.ExecuteReader();
-            if (!rdr.Read())
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
             {
-                conn.Close();
-                return;
+                command.CommandText = $"select * from productoption where id = '{id}'";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        IsNew = false;
+                        Id = Guid.Parse(reader["Id"].ToString());
+                        ProductId = Guid.Parse(reader["ProductId"].ToString());
+                        Name = reader["Name"].ToString();
+                        Description = DBNull.Value == reader["Description"] ? null : reader["Description"].ToString();
+                    }
+                }
             }
 
-            IsNew = false;
-            Id = Guid.Parse(rdr["Id"].ToString());
-            ProductId = Guid.Parse(rdr["ProductId"].ToString());
-            Name = rdr["Name"].ToString();
-            Description = DBNull.Value == rdr["Description"] ? null : rdr["Description"].ToString();
-            conn.Close();
+            _connection.Close();
         }
 
         public string Description { get; set; }
@@ -79,25 +83,35 @@ namespace Refactor_me.Models
 
         public void Delete()
         {
-            var conn = Helpers.NewConnection();
-            conn.Open();
-            var cmd = new SqlCommand($"delete from productoption where id = '{Id}'", conn);
-            cmd.ExecuteReader();
-            conn.Close();
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
+            {
+                command.CommandText = $"delete from productoption where id = '{Id}'";
+                command.ExecuteReader();
+            }
+
+            _connection.Close();
         }
 
         public void Save()
         {
-            var conn = Helpers.NewConnection();
-            var cmd = IsNew
-                          ? new
-                              SqlCommand($"insert into productoption (id, productid, name, description) values ('{Id}', '{ProductId}', '{Name}', '{Description}')",
-                                         conn)
-                          : new SqlCommand($"update productoption set name = '{Name}', description = '{Description}' where id = '{Id}'", conn);
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
+            {
+                if (IsNew)
+                {
+                    command.CommandText =
+                        $"insert into productoption (id, productid, name, description) values ('{Id}', '{ProductId}', '{Name}', '{Description}')";
+                }
+                else
+                {
+                    command.CommandText = $"update productoption set name = '{Name}', description = '{Description}' where id = '{Id}'";
+                }
 
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                command.ExecuteNonQuery();
+            }
+
+            _connection.Close();
         }
 
         protected bool Equals(ProductOption other)

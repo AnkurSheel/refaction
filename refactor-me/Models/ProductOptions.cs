@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data;
 
 namespace Refactor_me.Models
 {
     public class ProductOptions
     {
+        private readonly IDbConnection _connection = Helpers.NewConnection();
+
         public ProductOptions()
         {
             LoadProductOptions(null);
@@ -21,18 +23,20 @@ namespace Refactor_me.Models
         private void LoadProductOptions(string where)
         {
             Items = new List<ProductOption>();
-            var conn = Helpers.NewConnection();
-            var cmd = new SqlCommand($"select id from productoption {where}", conn);
-            conn.Open();
-
-            var rdr = cmd.ExecuteReader();
-            while (rdr.Read())
+            _connection.Open();
+            using (var command = _connection.CreateCommand())
             {
-                var id = Guid.Parse(rdr["id"].ToString());
-                Items.Add(new ProductOption(id));
+                command.CommandText = $"select id from productoption {where}";
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var id = Guid.Parse(reader["id"].ToString());
+                    Items.Add(new ProductOption(id));
+                }
             }
 
-            conn.Close();
+            _connection.Close();
         }
     }
 }
