@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProductControllerTests.cs" />
+    <Compile Include="ControllerTestsBase.cs" />
+    <Compile Include="ProductOptionsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
