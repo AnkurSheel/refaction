@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using Newtonsoft.Json;
+using Refactor_me.DataHelpers;
 
 namespace Refactor_me.Models
 {
@@ -21,7 +22,7 @@ namespace Refactor_me.Models
             using (var command = _connection.CreateCommand())
             {
                 command.CommandText = @"select * from product where id = @id";
-                Helpers.AddParameter(command, "id", id);
+                CommandExtensions.AddParameter(command, "id", id);
 
                 var reader = command.ExecuteReader();
                 if (reader.Read())
@@ -95,7 +96,7 @@ namespace Refactor_me.Models
             using (var command = _connection.CreateCommand())
             {
                 command.CommandText = @"delete from product where id = @id";
-                Helpers.AddParameter(command, "id", Id);
+                CommandExtensions.AddParameter(command, "id", Id);
                 command.ExecuteNonQuery();
             }
 
@@ -118,11 +119,11 @@ namespace Refactor_me.Models
                         @"update product set name = @Name, description = @Description, price = @Price, deliveryprice = @DeliveryPrice where id = @Id";
                 }
 
-                Helpers.AddParameter(command, "Id", Id);
-                Helpers.AddParameter(command, "Name", Name);
-                Helpers.AddParameter(command, "Description", Description);
-                Helpers.AddParameter(command, "Price", Price);
-                Helpers.AddParameter(command, "DeliveryPrice", DeliveryPrice);
+                CommandExtensions.AddParameter(command, "Id", Id);
+                CommandExtensions.AddParameter(command, "Name", Name);
+                CommandExtensions.AddParameter(command, "Description", Description);
+                CommandExtensions.AddParameter(command, "Price", Price);
+                CommandExtensions.AddParameter(command, "DeliveryPrice", DeliveryPrice);
                 command.ExecuteNonQuery();
             }
 

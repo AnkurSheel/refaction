@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Refactor_me.DataHelpers;
 
 namespace Refactor_me.Models
 {
@@ -30,7 +31,7 @@ namespace Refactor_me.Models
                 if (!string.IsNullOrEmpty(name))
                 {
                     command.CommandText += @" where lower(name) like @name";
-                    Helpers.AddParameter(command, "name", "%" + name.ToLower() + "%");
+                    CommandExtensions.AddParameter(command, "name", "%" + name.ToLower() + "%");
                 }
 
                 var reader = command.ExecuteReader();

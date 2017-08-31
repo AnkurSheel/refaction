@@ -96,7 +96,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\Helpers.cs" />
+    <Compile Include="DataHelpers\CommandExtensions.cs" />
+    <Compile Include="DataHelpers\Helpers.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductOption.cs" />
     <Compile Include="Models\ProductOptions.cs" />

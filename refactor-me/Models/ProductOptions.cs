@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Refactor_me.DataHelpers;
 
 namespace Refactor_me.Models
 {
@@ -31,7 +32,7 @@ namespace Refactor_me.Models
                 if (productId != Guid.Empty)
                 {
                     command.CommandText += @" where productid = @productId";
-                    Helpers.AddParameter(command, "productId", productId);
+                    CommandExtensions.AddParameter(command, "productId", productId);
                 }
 
                 var reader = command.ExecuteReader();

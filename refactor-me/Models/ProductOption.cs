@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using Newtonsoft.Json;
+using Refactor_me.DataHelpers;
 
 namespace Refactor_me.Models
 {
@@ -21,7 +22,7 @@ namespace Refactor_me.Models
             using (var command = _connection.CreateCommand())
             {
                 command.CommandText = @"select * from productoption where id = @id";
-                Helpers.AddParameter(command, "id", id);
+                CommandExtensions.AddParameter(command, "id", id);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -87,7 +88,7 @@ namespace Refactor_me.Models
             using (var command = _connection.CreateCommand())
             {
                 command.CommandText = @"delete from productoption where id = @id";
-                Helpers.AddParameter(command, "id", Id);
+                CommandExtensions.AddParameter(command, "id", Id);
                 command.ExecuteReader();
             }
 
@@ -103,16 +104,16 @@ namespace Refactor_me.Models
                 {
                     command.CommandText =
                         @"insert into productoption (id, productid, name, description) values (@Id, @ProductId, @Name, @Description)";
-                    Helpers.AddParameter(command, "ProductId", ProductId);
+                    CommandExtensions.AddParameter(command, "ProductId", ProductId);
                 }
                 else
                 {
                     command.CommandText = @"update productoption set name = @Name, description = @Description where id = @Id";
                 }
 
-                Helpers.AddParameter(command, "Id", Id);
-                Helpers.AddParameter(command, "Name", Name);
-                Helpers.AddParameter(command, "Description", Description);
+                CommandExtensions.AddParameter(command, "Id", Id);
+                CommandExtensions.AddParameter(command, "Name", Name);
+                CommandExtensions.AddParameter(command, "Description", Description);
                 command.ExecuteNonQuery();
             }
 
