@@ -2,7 +2,8 @@
 using System.Net;
 using System.Web.Http;
 using Refactor_me.Models;
-using Refactor_me.Services;
+using Refactor_me.Services.Interfaces;
+using Refactor_me.Services.Services;
 
 namespace Refactor_me.Controllers
 {

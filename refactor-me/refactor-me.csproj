@@ -78,11 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Services\ProductOptionsService.cs" />
-    <Compile Include="Services\IProductOptionsService.cs" />
     <Compile Include="Controllers\ProductOptionsController.cs" />
-    <Compile Include="Services\ProductService.cs" />
-    <Compile Include="Services\IProductService.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -122,6 +118,10 @@
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
       <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>
       <Name>refactor-me.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\refactor-me.Services\refactor-me.Services.csproj">
+      <Project>{80DF316F-68A8-4F36-BEA4-4FF9415ED510}</Project>
+      <Name>refactor-me.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

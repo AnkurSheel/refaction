@@ -1,7 +1,8 @@
 ﻿using System;
 using Refactor_me.Models;
+using Refactor_me.Services.Interfaces;
 
-namespace Refactor_me.Services
+namespace Refactor_me.Services.Services
 {
     public class ProductOptionsService : IProductOptionsService
     {
