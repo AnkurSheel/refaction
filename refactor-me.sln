@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.Tests", "refact
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.Data", "refactor-me.Data\refactor-me.Data.csproj", "{D27BA11D-2706-4282-B452-02F6D974BF58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.Models", "refactor-me.Models\refactor-me.Models.csproj", "{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D27BA11D-2706-4282-B452-02F6D974BF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D27BA11D-2706-4282-B452-02F6D974BF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D27BA11D-2706-4282-B452-02F6D974BF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

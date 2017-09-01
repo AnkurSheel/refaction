@@ -68,6 +68,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
+      <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>
+      <Name>refactor-me.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\refactor-me\refactor-me.csproj">
       <Project>{20ab69f9-f2d3-4a68-96c3-424ec8b9406e}</Project>
       <Name>refactor-me</Name>
