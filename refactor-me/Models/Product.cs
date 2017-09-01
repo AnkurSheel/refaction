@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using Newtonsoft.Json;
-using Refactor_me.DataHelpers;
+using Refactor_me.Data;
 
 namespace Refactor_me.Models
 {

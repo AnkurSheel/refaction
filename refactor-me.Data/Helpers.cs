@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Web;
 
-namespace Refactor_me.DataHelpers
+namespace Refactor_me.Data
 {
     public static class Helpers
     {
@@ -23,7 +23,7 @@ namespace Refactor_me.DataHelpers
 
             var connectionString = ConfigurationManager.ConnectionStrings["Database"];
             var providerName = connectionString.ProviderName;
-            var factory = DbProviderFactories.GetFactory(providerName);
+            var factory = DbProviderFactories.GetFactory((string)providerName);
             var connection = factory.CreateConnection();
             if (connection == null)
             {

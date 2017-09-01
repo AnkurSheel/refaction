@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Refactor_me.DataHelpers;
+using Refactor_me.Data;
 
 namespace Refactor_me.Models
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 
-namespace Refactor_me.DataHelpers
+namespace Refactor_me.Data
 {
     public static class CommandExtensions
     {
