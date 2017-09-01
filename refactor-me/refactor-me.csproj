@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Services\ProductOptionsService.cs" />
+    <Compile Include="Services\IProductOptionsService.cs" />
     <Compile Include="Controllers\ProductOptionsController.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\IProductService.cs" />

@@ -32,7 +32,7 @@ namespace Refactor_me.Tests
 
             foreach (var productOptions in _productOptionsData)
             {
-                ProductOptionsController.CreateOption(productOptions.ProductId, productOptions);
+                ProductOptionsController.Create(productOptions.ProductId, productOptions);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Refactor_me.Tests
         public void ShouldCreateOptionWhenCallCreateOptionAndProductExistsAndProductOptionDoesNotExist()
         {
             var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
-            ProductOptionsController.CreateOption(_newProductOption.ProductId, _newProductOption);
+            ProductOptionsController.Create(_newProductOption.ProductId, _newProductOption);
 
             var option = ProductOptionsController.GetOption(_newProductOption.ProductId, _newProductOption.Id);
             var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
@@ -109,7 +109,7 @@ namespace Refactor_me.Tests
             oldProductOption.Name = "NewOption";
 
             var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
-            ProductOptionsController.CreateOption(oldProductOption.ProductId, oldProductOption);
+            ProductOptionsController.Create(oldProductOption.ProductId, oldProductOption);
 
             var option = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
             var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
@@ -124,7 +124,7 @@ namespace Refactor_me.Tests
             oldProductOption.Name = "NewOption";
 
             var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
-            ProductOptionsController.CreateOption(InvalidId, oldProductOption);
+            ProductOptionsController.Create(InvalidId, oldProductOption);
             oldProductOption.ProductId = ProductId1;
             var option = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
             var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
@@ -136,7 +136,7 @@ namespace Refactor_me.Tests
         public void ShouldCreateOptionWhenCallCreateOptionAndProductDoesNotExistAndProductOptionDoesNotExists()
         {
             _newProductOption.Id = InvalidId;
-            ProductOptionsController.CreateOption(InvalidId, _newProductOption);
+            ProductOptionsController.Create(InvalidId, _newProductOption);
 
             var option = ProductOptionsController.GetOption(InvalidId, _newProductOption.Id);
             var newNumberOfOptions = ProductOptionsController.GetOptions(InvalidId).Items.Count;
@@ -171,7 +171,7 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldDoNothingWhenCallDeleteOptionAndProductOptionDoesExists()
         {
-            ProductOptionsController.DeleteOption(_productOptionId1);
+            ProductOptionsController.Delete(_productOptionId1);
 
             var resultOptions = ProductOptionsController.GetOptions(ProductId1);
 
@@ -182,7 +182,7 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldDoNothingWhenCallDeleteOptionAndProductOptionDoesNotExist()
         {
-            ProductOptionsController.DeleteOption(_newProductOption.Id);
+            ProductOptionsController.Delete(_newProductOption.Id);
 
             var result = ProductOptionsController.GetOptions(ProductId1);
 

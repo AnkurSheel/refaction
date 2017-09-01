@@ -2,34 +2,41 @@
 using System.Net;
 using System.Web.Http;
 using Refactor_me.Models;
+using Refactor_me.Services;
 
 namespace Refactor_me.Controllers
 {
     [RoutePrefix("products/{productId}/options")]
     public class ProductOptionsController : ApiController
     {
+        private readonly IProductOptionsService _productOptionsService;
+
+        public ProductOptionsController()
+        {
+            // TODO : This needs to be injected
+            _productOptionsService = new ProductOptionsService();
+        }
+
         [Route]
         [HttpPost]
-        public void CreateOption(Guid productId, ProductOption option)
+        public void Create(Guid productId, ProductOption newOption)
         {
-            option.ProductId = productId;
-            option.Save();
+            _productOptionsService.AddNewOption(productId, newOption);
         }
 
         [Route("{id}")]
         [HttpDelete]
-        public void DeleteOption(Guid id)
+        public void Delete(Guid id)
         {
-            var opt = new ProductOption(id);
-            opt.Delete();
+            _productOptionsService.RemoveOption(id);
         }
 
         [Route("{id}")]
         [HttpGet]
         public ProductOption GetOption(Guid productId, Guid id)
         {
-            var option = new ProductOption(id);
-            if (option.IsNew)
+            var option = _productOptionsService.GetOption(id);
+            if (option == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
@@ -41,19 +48,14 @@ namespace Refactor_me.Controllers
         [HttpGet]
         public ProductOptions GetOptions(Guid productId)
         {
-            return new ProductOptions(productId);
+            return _productOptionsService.GetOptions(productId);
         }
 
         [Route("{id}")]
         [HttpPut]
         public void UpdateOption(Guid id, ProductOption updatedOption)
         {
-            var orig = new ProductOption(id) { Name = updatedOption.Name, Description = updatedOption.Description };
-
-            if (!orig.IsNew)
-            {
-                orig.Save();
-            }
+            _productOptionsService.UpdateOption(id, updatedOption);
         }
     }
 }
