@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using Newtonsoft.Json;
 using Refactor_me.Data;
 
@@ -7,8 +6,6 @@ namespace Refactor_me.Models
 {
     public class ProductOption
     {
-        private readonly IDbConnection _connection = Helpers.NewConnection();
-
         public ProductOption()
         {
             Id = Guid.NewGuid();
@@ -18,25 +15,25 @@ namespace Refactor_me.Models
         public ProductOption(Guid id)
         {
             IsNew = true;
-            _connection.Open();
-            using (var command = _connection.CreateCommand())
+            using (var connection = Helpers.NewConnection())
             {
-                command.CommandText = @"select * from productoption where id = @id";
-                CommandExtensions.AddParameter(command, "id", id);
-                using (var reader = command.ExecuteReader())
+                using (var command = connection.CreateCommand())
                 {
-                    while (reader.Read())
+                    command.CommandText = @"select * from productoption where id = @id";
+                    CommandExtensions.AddParameter(command, "id", id);
+                    using (var reader = command.ExecuteReader())
                     {
-                        IsNew = false;
-                        Id = Guid.Parse(reader["Id"].ToString());
-                        ProductId = Guid.Parse(reader["ProductId"].ToString());
-                        Name = reader["Name"].ToString();
-                        Description = DBNull.Value == reader["Description"] ? null : reader["Description"].ToString();
+                        while (reader.Read())
+                        {
+                            IsNew = false;
+                            Id = Guid.Parse(reader["Id"].ToString());
+                            ProductId = Guid.Parse(reader["ProductId"].ToString());
+                            Name = reader["Name"].ToString();
+                            Description = DBNull.Value == reader["Description"] ? null : reader["Description"].ToString();
+                        }
                     }
                 }
             }
-
-            _connection.Close();
         }
 
         public string Description { get; set; }
@@ -84,40 +81,40 @@ namespace Refactor_me.Models
 
         public void Delete()
         {
-            _connection.Open();
-            using (var command = _connection.CreateCommand())
+            using (var connection = Helpers.NewConnection())
             {
-                command.CommandText = @"delete from productoption where id = @id";
-                CommandExtensions.AddParameter(command, "id", Id);
-                command.ExecuteReader();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = @"delete from productoption where id = @id";
+                    CommandExtensions.AddParameter(command, "id", Id);
+                    command.ExecuteReader();
+                }
             }
-
-            _connection.Close();
         }
 
         public void Save()
         {
-            _connection.Open();
-            using (var command = _connection.CreateCommand())
+            using (var connection = Helpers.NewConnection())
             {
-                if (IsNew)
+                using (var command = connection.CreateCommand())
                 {
-                    command.CommandText =
-                        @"insert into productoption (id, productid, name, description) values (@Id, @ProductId, @Name, @Description)";
-                    CommandExtensions.AddParameter(command, "ProductId", ProductId);
-                }
-                else
-                {
-                    command.CommandText = @"update productoption set name = @Name, description = @Description where id = @Id";
-                }
+                    if (IsNew)
+                    {
+                        command.CommandText =
+                            @"insert into productoption (id, productid, name, description) values (@Id, @ProductId, @Name, @Description)";
+                        CommandExtensions.AddParameter(command, "ProductId", ProductId);
+                    }
+                    else
+                    {
+                        command.CommandText = @"update productoption set name = @Name, description = @Description where id = @Id";
+                    }
 
-                CommandExtensions.AddParameter(command, "Id", Id);
-                CommandExtensions.AddParameter(command, "Name", Name);
-                CommandExtensions.AddParameter(command, "Description", Description);
-                command.ExecuteNonQuery();
+                    CommandExtensions.AddParameter(command, "Id", Id);
+                    CommandExtensions.AddParameter(command, "Name", Name);
+                    CommandExtensions.AddParameter(command, "Description", Description);
+                    command.ExecuteNonQuery();
+                }
             }
-
-            _connection.Close();
         }
 
         protected bool Equals(ProductOption other)

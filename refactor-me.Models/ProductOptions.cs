@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using Refactor_me.Data;
 
 namespace Refactor_me.Models
 {
     public class ProductOptions
     {
-        private readonly IDbConnection _connection = Helpers.NewConnection();
-
         // TODO : Remove this
         public ProductOptions()
         {
@@ -25,25 +22,25 @@ namespace Refactor_me.Models
         private void LoadProductOptions(Guid productId)
         {
             Items = new List<ProductOption>();
-            _connection.Open();
-            using (var command = _connection.CreateCommand())
+            using (var connection = Helpers.NewConnection())
             {
-                command.CommandText = @"select id from productoption";
-                if (productId != Guid.Empty)
+                using (var command = connection.CreateCommand())
                 {
-                    command.CommandText += @" where productid = @productId";
-                    CommandExtensions.AddParameter(command, "productId", productId);
-                }
+                    command.CommandText = @"select id from productoption";
+                    if (productId != Guid.Empty)
+                    {
+                        command.CommandText += @" where productid = @productId";
+                        CommandExtensions.AddParameter(command, "productId", productId);
+                    }
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var id = Guid.Parse(reader["id"].ToString());
-                    Items.Add(new ProductOption(id));
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var id = Guid.Parse(reader["id"].ToString());
+                        Items.Add(new ProductOption(id));
+                    }
                 }
             }
-
-            _connection.Close();
         }
     }
 }

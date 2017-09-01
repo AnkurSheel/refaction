@@ -7,8 +7,6 @@ namespace Refactor_me.Models
 {
     public class Products
     {
-        private readonly IDbConnection _connection = Helpers.NewConnection();
-
         public Products()
         {
             LoadProducts(null);
@@ -24,25 +22,25 @@ namespace Refactor_me.Models
         private void LoadProducts(string name)
         {
             Items = new List<Product>();
-            _connection.Open();
-            using (var command = _connection.CreateCommand())
+            using (var connection = Helpers.NewConnection())
             {
-                command.CommandText = @"select id from product";
-                if (!string.IsNullOrEmpty(name))
+                using (var command = connection.CreateCommand())
                 {
-                    command.CommandText += @" where lower(name) like @name";
-                    CommandExtensions.AddParameter(command, "name", "%" + name.ToLower() + "%");
-                }
+                    command.CommandText = @"select id from product";
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        command.CommandText += @" where lower(name) like @name";
+                        CommandExtensions.AddParameter(command, "name", "%" + name.ToLower() + "%");
+                    }
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var id = Guid.Parse(reader["id"].ToString());
-                    Items.Add(new Product(id));
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var id = Guid.Parse(reader["id"].ToString());
+                        Items.Add(new Product(id));
+                    }
                 }
             }
-
-            _connection.Close();
         }
     }
 }

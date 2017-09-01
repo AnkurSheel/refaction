@@ -31,6 +31,7 @@ namespace Refactor_me.Data
             }
 
             connection.ConnectionString = connectionString.ConnectionString;
+            connection.Open();
             return connection;
         }
     }
