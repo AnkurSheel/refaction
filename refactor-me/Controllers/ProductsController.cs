@@ -24,14 +24,6 @@ namespace Refactor_me.Controllers
             _productService.AddNewProduct(product);
         }
 
-        [Route("{productId}/options")]
-        [HttpPost]
-        public void CreateOption(Guid productId, ProductOption option)
-        {
-            option.ProductId = productId;
-            option.Save();
-        }
-
         [Route("{id}")]
         [HttpDelete]
         public void Delete(Guid id)
@@ -39,39 +31,11 @@ namespace Refactor_me.Controllers
             _productService.RemoveProduct(id);
         }
 
-        [Route("{productId}/options/{id}")]
-        [HttpDelete]
-        public void DeleteOption(Guid id)
-        {
-            var opt = new ProductOption(id);
-            opt.Delete();
-        }
-
         [Route]
         [HttpGet]
         public Products GetAll()
         {
             return _productService.GetAllProducts();
-        }
-
-        [Route("{productId}/options/{id}")]
-        [HttpGet]
-        public ProductOption GetOption(Guid productId, Guid id)
-        {
-            var option = new ProductOption(id);
-            if (option.IsNew)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            return option;
-        }
-
-        [Route("{productId}/options")]
-        [HttpGet]
-        public ProductOptions GetOptions(Guid productId)
-        {
-            return new ProductOptions(productId);
         }
 
         [Route("{id}")]
@@ -99,18 +63,6 @@ namespace Refactor_me.Controllers
         public void Update(Guid id, Product updatedProduct)
         {
             _productService.UpdateProductForId(id, updatedProduct);
-        }
-
-        [Route("{productId}/options/{id}")]
-        [HttpPut]
-        public void UpdateOption(Guid id, ProductOption updatedOption)
-        {
-            var orig = new ProductOption(id) { Name = updatedOption.Name, Description = updatedOption.Description };
-
-            if (!orig.IsNew)
-            {
-                orig.Save();
-            }
         }
     }
 }

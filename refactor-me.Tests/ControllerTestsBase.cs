@@ -12,6 +12,7 @@ namespace Refactor_me.Tests
         protected readonly Guid ProductId1 = new Guid("11111111-1111-1111-1111-111111111111");
         protected readonly Guid ProductId2 = new Guid("22222222-2222-2222-2222-222222222222");
         protected readonly Guid ProductId3 = new Guid("33333333-3333-3333-3333-333333333333");
+        protected readonly ProductOptionsController ProductOptionsController;
         protected readonly ProductsController ProductsController;
 
         protected IList<Product> ProductsData;
@@ -19,6 +20,7 @@ namespace Refactor_me.Tests
         protected ControllerTestsBase()
         {
             ProductsController = new ProductsController();
+            ProductOptionsController = new ProductOptionsController();
         }
 
         protected virtual void SetupTestData()

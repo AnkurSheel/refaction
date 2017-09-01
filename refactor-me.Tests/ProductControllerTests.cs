@@ -37,7 +37,7 @@ namespace Refactor_me.Tests
         {
             ProductsController.Delete(ProductId1);
 
-            var resultOptions = ProductsController.GetOptions(ProductId1);
+            var resultOptions = ProductOptionsController.GetOptions(ProductId1);
 
             ProductsController.GetProduct(ProductId1);
             Assert.AreEqual(0, resultOptions.Items.Count);
