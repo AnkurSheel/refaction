@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Refactor_me.Data.Helpers;
 using Refactor_me.Models;
@@ -37,7 +38,7 @@ namespace Refactor_me.Data
         public static void Delete(Guid id)
         {
             var options = ProductOptionData.QueryAll(id);
-            foreach (var option in options.Items)
+            foreach (var option in options)
             {
                 ProductOptionData.Delete(option.Id);
             }
@@ -73,9 +74,9 @@ namespace Refactor_me.Data
             return null;
         }
 
-        public static Products Query(string name)
+        public static IEnumerable<Product> QueryAll(string name)
         {
-            var products = new Products();
+            var products = new List<Product>();
             using (var connection = ConnectionCreator.NewConnection())
             {
                 using (var command = connection.CreateCommand())
@@ -90,26 +91,7 @@ namespace Refactor_me.Data
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        products.Items.Add(Map(reader));
-                    }
-                }
-            }
-
-            return products;
-        }
-
-        public static Products QueryAll()
-        {
-            var products = new Products();
-            using (var connection = ConnectionCreator.NewConnection())
-            {
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = @"select * from product";
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        products.Items.Add(Map(reader));
+                        products.Add(Map(reader));
                     }
                 }
             }

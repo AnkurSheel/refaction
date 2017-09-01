@@ -37,10 +37,10 @@ namespace Refactor_me.Tests
         {
             ProductsController.Delete(ProductId1);
 
-            var resultOptions = ProductOptionsController.GetOptions(ProductId1);
+            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
 
-            ProductsController.GetProduct(ProductId1);
-            Assert.AreEqual(0, resultOptions.Items.Count);
+            Assert.IsNull(ProductsController.GetProduct(ProductId1));
+            Assert.AreEqual(0, options.Count);
         }
 
         [TestMethod]
@@ -48,9 +48,9 @@ namespace Refactor_me.Tests
         {
             ProductsController.Delete(_newProduct.Id);
 
-            var result = ProductsController.GetAll();
+            var products = ProductsController.GetAll().ToList();
 
-            Assert.AreEqual(ProductsData.Count, result.Items.Count);
+            Assert.AreEqual(ProductsData.Count, products.Count);
         }
 
         [TestMethod]
@@ -58,9 +58,9 @@ namespace Refactor_me.Tests
         {
             ProductsController.Update(_newProduct.Id, _newProduct);
 
-            var result = ProductsController.GetAll();
+            var products = ProductsController.GetAll().ToList();
 
-            Assert.AreEqual(ProductsData.Count, result.Items.Count);
+            Assert.AreEqual(ProductsData.Count, products.Count);
         }
 
         [TestMethod]
@@ -75,10 +75,10 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldGetCorrectDataWhenCallSearchByNameAndProductExists()
         {
-            var result = ProductsController.SearchByName(ProductName1);
-            Assert.AreEqual(1, result.Items.Count);
+            var products = ProductsController.SearchByName(ProductName1).ToList();
+            Assert.AreEqual(1, products.Count);
 
-            var product = result.Items.ElementAt(0);
+            var product = products.ElementAt(0);
             var expect = ProductsData.AsQueryable().FirstOrDefault(p => p.Id == product.Id);
             Assert.AreEqual(expect, product);
         }
@@ -86,11 +86,11 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldGetCorrectDataWhenGettingAllProducts()
         {
-            var products = ProductsController.GetAll();
+            var products = ProductsController.GetAll().ToList();
 
-            Assert.AreEqual(ProductsData.Count, products.Items.Count);
+            Assert.AreEqual(ProductsData.Count, products.Count);
 
-            foreach (var product in products.Items)
+            foreach (var product in products)
             {
                 var expect = ProductsData.AsQueryable().FirstOrDefault(p => p.Id == product.Id);
                 Assert.AreEqual(expect, product);
@@ -100,9 +100,9 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldGetNoDataWhenCallSearchByNameAndProductDoesNotExist()
         {
-            var result = ProductsController.SearchByName("Invalid Name");
+            var products = ProductsController.SearchByName("Invalid Name").ToList();
 
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, products.Count);
         }
 
         [TestMethod]

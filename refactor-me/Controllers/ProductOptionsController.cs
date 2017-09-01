@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using Refactor_me.Models;
@@ -47,7 +49,7 @@ namespace Refactor_me.Controllers
 
         [Route]
         [HttpGet]
-        public ProductOptions GetOptions(Guid productId)
+        public IEnumerable<ProductOption> GetOptions(Guid productId)
         {
             return _productOptionsService.GetOptions(productId);
         }

@@ -48,8 +48,8 @@ namespace Refactor_me.Tests
 
         protected void ClearDatabase()
         {
-            var allProducts = ProductsController.GetAll();
-            foreach (var product in allProducts.Items)
+            var products = ProductsController.GetAll();
+            foreach (var product in products)
             {
                 ProductsController.Delete(product.Id);
             }

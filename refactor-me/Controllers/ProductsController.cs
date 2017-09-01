@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using Refactor_me.Models;
@@ -34,7 +36,7 @@ namespace Refactor_me.Controllers
 
         [Route]
         [HttpGet]
-        public Products GetAll()
+        public IEnumerable<Product> GetAll()
         {
             return _productService.GetAllProducts();
         }
@@ -54,7 +56,7 @@ namespace Refactor_me.Controllers
 
         [Route]
         [HttpGet]
-        public Products SearchByName(string name)
+        public IEnumerable<Product> SearchByName(string name)
         {
             return _productService.GetProducts(name);
         }

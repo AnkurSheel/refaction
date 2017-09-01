@@ -36,27 +36,26 @@ namespace Refactor_me.Tests
             }
         }
 
-
         [TestMethod]
         public void ShouldGetCorrectDataWhenCallGetOptionsAndProductExists()
         {
-            var result = ProductOptionsController.GetOptions(ProductId1);
+            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
 
-            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), result.Items.Count);
+            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), options.Count);
 
-            foreach (var productOptions in result.Items)
+            foreach (var option in options)
             {
-                var expect = _productOptionsData.AsQueryable().FirstOrDefault(po => po.Id == productOptions.Id);
-                Assert.AreEqual((object)expect, productOptions);
+                var expect = _productOptionsData.AsQueryable().FirstOrDefault(po => po.Id == option.Id);
+                Assert.AreEqual((object)expect, option);
             }
         }
 
         [TestMethod]
         public void ShouldGetNothingWhenCallGetOptionsAndProductDoesNotExist()
         {
-            var result = ProductOptionsController.GetOptions(InvalidId);
+            var options = ProductOptionsController.GetOptions(InvalidId).ToList();
 
-            Assert.AreEqual(0, result.Items.Count);
+            Assert.AreEqual(0, options.Count);
         }
 
         [TestMethod]
@@ -66,7 +65,6 @@ namespace Refactor_me.Tests
 
             var expect = _productOptionsData.AsQueryable().FirstOrDefault(p => p.Id == result.Id);
             Assert.AreEqual((object)expect, result);
-
         }
 
         [TestMethod]
@@ -93,11 +91,11 @@ namespace Refactor_me.Tests
         [TestMethod]
         public void ShouldCreateOptionWhenCallCreateOptionAndProductExistsAndProductOptionDoesNotExist()
         {
-            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             ProductOptionsController.Create(_newProductOption.ProductId, _newProductOption);
 
             var option = ProductOptionsController.GetOption(_newProductOption.ProductId, _newProductOption.Id);
-            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             Assert.AreEqual((object)_newProductOption, option);
             Assert.AreEqual(originalNumberofOptions + 1, newNumberOfOptions);
         }
@@ -108,11 +106,11 @@ namespace Refactor_me.Tests
             var oldProductOption = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
             oldProductOption.Name = "NewOption";
 
-            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             ProductOptionsController.Create(oldProductOption.ProductId, oldProductOption);
 
             var option = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
-            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             Assert.AreEqual((object)oldProductOption, option);
             Assert.AreEqual((object)originalNumberofOptions, newNumberOfOptions);
         }
@@ -123,11 +121,11 @@ namespace Refactor_me.Tests
             var oldProductOption = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
             oldProductOption.Name = "NewOption";
 
-            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var originalNumberofOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             ProductOptionsController.Create(InvalidId, oldProductOption);
             oldProductOption.ProductId = ProductId1;
             var option = ProductOptionsController.GetOption(ProductId1, _productOptionId1);
-            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).Items.Count;
+            var newNumberOfOptions = ProductOptionsController.GetOptions(_newProductOption.ProductId).ToList().Count;
             Assert.AreEqual((object)oldProductOption, option);
             Assert.AreEqual((object)originalNumberofOptions, newNumberOfOptions);
         }
@@ -141,7 +139,7 @@ namespace Refactor_me.Tests
             _newProductOption.ProductId = InvalidId;
 
             var option = ProductOptionsController.GetOption(InvalidId, _newProductOption.Id);
-            var newNumberOfOptions = ProductOptionsController.GetOptions(InvalidId).Items.Count;
+            var newNumberOfOptions = ProductOptionsController.GetOptions(InvalidId).ToList().Count;
             Assert.AreEqual((object)_newProductOption, option);
             Assert.AreEqual(1, newNumberOfOptions);
         }
@@ -165,9 +163,9 @@ namespace Refactor_me.Tests
         {
             ProductOptionsController.UpdateOption(_newProductOption.Id, _newProductOption);
 
-            var result = ProductOptionsController.GetOptions(ProductId1);
+            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
 
-            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), result.Items.Count);
+            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), options.Count);
         }
 
         [TestMethod]
@@ -175,10 +173,9 @@ namespace Refactor_me.Tests
         {
             ProductOptionsController.Delete(_productOptionId1);
 
-            var resultOptions = ProductOptionsController.GetOptions(ProductId1);
+            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
 
-            Assert.AreEqual(_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1) - 1,
-                            resultOptions.Items.Count);
+            Assert.AreEqual(_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1) - 1, options.Count);
         }
 
         [TestMethod]
@@ -186,9 +183,9 @@ namespace Refactor_me.Tests
         {
             ProductOptionsController.Delete(_newProductOption.Id);
 
-            var result = ProductOptionsController.GetOptions(ProductId1);
+            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
 
-            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), result.Items.Count);
+            Assert.AreEqual((object)_productOptionsData.AsQueryable().Count(po => po.ProductId == ProductId1), options.Count);
         }
 
         protected override void SetupTestData()

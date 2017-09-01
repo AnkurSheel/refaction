@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Refactor_me.Models;
 
 namespace Refactor_me.Services.Interfaces
@@ -9,7 +11,7 @@ namespace Refactor_me.Services.Interfaces
 
         ProductOption GetOption(Guid id);
 
-        ProductOptions GetOptions(Guid productId);
+        IEnumerable<ProductOption> GetOptions(Guid productId);
 
         void RemoveOption(Guid id);
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Refactor_me.Data;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
@@ -12,9 +14,9 @@ namespace Refactor_me.Services.Services
             ProductData.Create(product);
         }
 
-        public Products GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
-            return ProductData.QueryAll();
+            return ProductData.QueryAll(string.Empty);
         }
 
         public Product GetProduct(Guid id)
@@ -22,9 +24,9 @@ namespace Refactor_me.Services.Services
             return ProductData.Query(id);
         }
 
-        public Products GetProducts(string name)
+        public IEnumerable<Product> GetProducts(string name)
         {
-            return ProductData.Query(name);
+            return ProductData.QueryAll(name);
         }
 
         public void RemoveProduct(Guid id)

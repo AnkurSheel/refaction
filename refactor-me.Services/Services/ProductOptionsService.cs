@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Refactor_me.Data;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
@@ -17,7 +18,7 @@ namespace Refactor_me.Services.Services
             return ProductOptionData.Query(id);
         }
 
-        public ProductOptions GetOptions(Guid productId)
+        public IEnumerable<ProductOption> GetOptions(Guid productId)
         {
             return ProductOptionData.QueryAll(productId);
         }

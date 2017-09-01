@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using Refactor_me.Data.Helpers;
 using Refactor_me.Models;
@@ -66,9 +68,9 @@ namespace Refactor_me.Data
             return null;
         }
 
-        public static ProductOptions QueryAll(Guid productId)
+        public static IEnumerable<ProductOption> QueryAll(Guid productId)
         {
-            var options = new ProductOptions();
+            var options = new List<ProductOption>();
             using (var connection = ConnectionCreator.NewConnection())
             {
                 using (var command = connection.CreateCommand())
@@ -79,7 +81,7 @@ namespace Refactor_me.Data
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        options.Items.Add(Map(reader));
+                        options.Add(Map(reader));
                     }
                 }
             }

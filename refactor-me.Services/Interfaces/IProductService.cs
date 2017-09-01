@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Refactor_me.Models;
 
 namespace Refactor_me.Services.Interfaces
@@ -7,11 +8,11 @@ namespace Refactor_me.Services.Interfaces
     {
         void AddNewProduct(Product product);
 
-        Products GetAllProducts();
+        IEnumerable<Product> GetAllProducts();
 
         Product GetProduct(Guid id);
 
-        Products GetProducts(string name);
+        IEnumerable<Product> GetProducts(string name);
 
         void RemoveProduct(Guid id);
 
