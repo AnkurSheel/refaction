@@ -2,17 +2,26 @@
 using System.Net;
 using System.Web.Http;
 using Refactor_me.Models;
+using Refactor_me.Services;
 
 namespace Refactor_me.Controllers
 {
     [RoutePrefix("products")]
     public class ProductsController : ApiController
     {
+        private readonly IProductService _productService;
+
+        public ProductsController()
+        {
+            // TODO : This needs to be injected
+            _productService = new ProductService();
+        }
+
         [Route]
         [HttpPost]
         public void Create(Product product)
         {
-            product.Save();
+            _productService.AddNewProduct(product);
         }
 
         [Route("{productId}/options")]
@@ -27,8 +36,7 @@ namespace Refactor_me.Controllers
         [HttpDelete]
         public void Delete(Guid id)
         {
-            var product = new Product(id);
-            product.Delete();
+            _productService.RemoveProduct(id);
         }
 
         [Route("{productId}/options/{id}")]
@@ -43,7 +51,7 @@ namespace Refactor_me.Controllers
         [HttpGet]
         public Products GetAll()
         {
-            return new Products();
+            return _productService.GetAllProducts();
         }
 
         [Route("{productId}/options/{id}")]
@@ -70,8 +78,8 @@ namespace Refactor_me.Controllers
         [HttpGet]
         public Product GetProduct(Guid id)
         {
-            var product = new Product(id);
-            if (product.IsNew)
+            var product = _productService.GetProduct(id);
+            if (product == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
@@ -83,32 +91,21 @@ namespace Refactor_me.Controllers
         [HttpGet]
         public Products SearchByName(string name)
         {
-            return new Products(name);
+            return _productService.GetProducts(name);
         }
 
         [Route("{id}")]
         [HttpPut]
-        public void Update(Guid id, Product product)
+        public void Update(Guid id, Product updatedProduct)
         {
-            var orig = new Product(id)
-                       {
-                           Name = product.Name,
-                           Description = product.Description,
-                           Price = product.Price,
-                           DeliveryPrice = product.DeliveryPrice
-                       };
-
-            if (!orig.IsNew)
-            {
-                orig.Save();
-            }
+            _productService.UpdateProductForId(id, updatedProduct);
         }
 
         [Route("{productId}/options/{id}")]
         [HttpPut]
-        public void UpdateOption(Guid id, ProductOption option)
+        public void UpdateOption(Guid id, ProductOption updatedOption)
         {
-            var orig = new ProductOption(id) { Name = option.Name, Description = option.Description };
+            var orig = new ProductOption(id) { Name = updatedOption.Name, Description = updatedOption.Description };
 
             if (!orig.IsNew)
             {
