@@ -6,9 +6,9 @@ using System.IO;
 using System.Reflection;
 using System.Web;
 
-namespace Refactor_me.Data
+namespace Refactor_me.Data.Helpers
 {
-    public static class Helpers
+    public static class ConnectionCreator
     {
         public static IDbConnection NewConnection()
         {

@@ -138,6 +138,8 @@ namespace Refactor_me.Tests
             _newProductOption.Id = InvalidId;
             ProductOptionsController.Create(InvalidId, _newProductOption);
 
+            _newProductOption.ProductId = InvalidId;
+
             var option = ProductOptionsController.GetOption(InvalidId, _newProductOption.Id);
             var newNumberOfOptions = ProductOptionsController.GetOptions(InvalidId).Items.Count;
             Assert.AreEqual((object)_newProductOption, option);

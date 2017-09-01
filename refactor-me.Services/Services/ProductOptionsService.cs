@@ -1,4 +1,5 @@
 ﻿using System;
+using Refactor_me.Data;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
 
@@ -8,35 +9,27 @@ namespace Refactor_me.Services.Services
     {
         public void AddNewOption(Guid productId, ProductOption newOption)
         {
-            newOption.ProductId = productId;
-            newOption.Save();
+            ProductOptionData.Create(productId, newOption);
         }
 
         public ProductOption GetOption(Guid id)
         {
-            var option = new ProductOption(id);
-            return option.IsNew ? null : option;
+            return ProductOptionData.Query(id);
         }
 
         public ProductOptions GetOptions(Guid productId)
         {
-            return new ProductOptions(productId);
+            return ProductOptionData.QueryAll(productId);
         }
 
         public void RemoveOption(Guid id)
         {
-            var opt = new ProductOption(id);
-            opt.Delete();
+            ProductOptionData.Delete(id);
         }
 
         public void UpdateOption(Guid id, ProductOption updatedOption)
         {
-            var orig = new ProductOption(id) { Name = updatedOption.Name, Description = updatedOption.Description };
-
-            if (!orig.IsNew)
-            {
-                orig.Save();
-            }
+            ProductOptionData.Update(id, updatedOption);
         }
     }
 }
