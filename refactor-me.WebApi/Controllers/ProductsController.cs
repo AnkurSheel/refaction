@@ -5,7 +5,7 @@ using System.Web.Http;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
 
-namespace Refactor_me.Controllers
+namespace Refactor_me.WebApi.Controllers
 {
     [RoutePrefix("products")]
     public class ProductsController : ApiController

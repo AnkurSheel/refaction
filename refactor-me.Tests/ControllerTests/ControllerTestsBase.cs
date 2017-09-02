@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Refactor_me;
-using Refactor_me.Controllers;
 using Refactor_me.IOC;
 using Refactor_me.Models;
+using Refactor_me.WebApi.Controllers;
 
 namespace refactor_me.Tests.ControllerTests
 {
