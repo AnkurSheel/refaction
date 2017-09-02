@@ -9,11 +9,13 @@ namespace Refactor_me.Services.Services
 {
     public class ProductService : IProductService
     {
+        private readonly IRepository<ProductOption> _productOptionRepository;
         private readonly IRepository<Product> _productRepository;
 
         public ProductService()
         {
             _productRepository = new ProductRepository();
+            _productOptionRepository = new ProductOptionRepository();
         }
 
         public void AddNewProduct(Product product)
@@ -46,10 +48,10 @@ namespace Refactor_me.Services.Services
 
         public void RemoveProduct(Guid id)
         {
-            var options = ProductOptionData.QueryAll(id);
+            var options = _productOptionRepository.FindAll();
             foreach (var option in options)
             {
-                ProductOptionData.Delete(option.Id);
+                _productOptionRepository.Remove(option.Id);
             }
 
             _productRepository.Remove(id);

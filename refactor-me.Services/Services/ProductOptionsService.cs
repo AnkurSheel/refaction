@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Refactor_me.Data;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
@@ -8,29 +9,45 @@ namespace Refactor_me.Services.Services
 {
     public class ProductOptionsService : IProductOptionsService
     {
+        private readonly IRepository<ProductOption> _productOptionRepository;
+
+        public ProductOptionsService()
+        {
+            _productOptionRepository = new ProductOptionRepository();
+        }
+
         public void AddNewOption(Guid productId, ProductOption newOption)
         {
-            ProductOptionData.Create(productId, newOption);
+            var optionExists = _productOptionRepository.FindById(newOption.Id) != null;
+            if (optionExists)
+            {
+                _productOptionRepository.Update(newOption.Id, newOption);
+            }
+            else
+            {
+                newOption.ProductId = productId;
+                _productOptionRepository.Add(newOption);
+            }
         }
 
         public ProductOption GetOption(Guid id)
         {
-            return ProductOptionData.Query(id);
+            return _productOptionRepository.FindById(id);
         }
 
         public IEnumerable<ProductOption> GetOptions(Guid productId)
         {
-            return ProductOptionData.QueryAll(productId);
+            return _productOptionRepository.FindAll().Where(o => o.ProductId == productId);
         }
 
         public void RemoveOption(Guid id)
         {
-            ProductOptionData.Delete(id);
+            _productOptionRepository.Remove(id);
         }
 
         public void UpdateOption(Guid id, ProductOption updatedOption)
         {
-            ProductOptionData.Update(id, updatedOption);
+            _productOptionRepository.Update(id, updatedOption);
         }
     }
 }
