@@ -11,6 +11,8 @@
     <AssemblyName>refactor-me.IOC</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBootstrapper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IocConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesBootstrapper.cs" />
@@ -80,6 +83,14 @@
       <Project>{80DF316F-68A8-4F36-BEA4-4FF9415ED510}</Project>
       <Name>refactor-me.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Desktop.Analyzers.1.1.0\analyzers\dotnet\cs\Desktop.Analyzers.dll" />
+    <Analyzer Include="..\packages\Desktop.Analyzers.1.1.0\analyzers\dotnet\cs\Desktop.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="..\packages\System.Security.Cryptography.Hashing.Algorithms.Analyzers.1.1.0\analyzers\dotnet\cs\System.Security.Cryptography.Hashing.Algorithms.Analyzers.dll" />
+    <Analyzer Include="..\packages\System.Security.Cryptography.Hashing.Algorithms.Analyzers.1.1.0\analyzers\dotnet\cs\System.Security.Cryptography.Hashing.Algorithms.CSharp.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -54,11 +54,12 @@ namespace Refactor_me.Data.Repositories
 
         protected override Product Map(IDataRecord record)
         {
+            var description = record["Description"] == DBNull.Value ? null : record["Description"].ToString();
             return new Product
                    {
                        Id = Guid.Parse(record["Id"].ToString()),
                        Name = record["Name"].ToString(),
-                       Description = DBNull.Value == record["Description"] ? null : record["Description"].ToString(),
+                       Description = description,
                        Price = decimal.Parse(record["Price"].ToString()),
                        DeliveryPrice = decimal.Parse(record["DeliveryPrice"].ToString())
                    };
