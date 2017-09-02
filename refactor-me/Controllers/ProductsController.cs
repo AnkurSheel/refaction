@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using Refactor_me.Data.Helpers;
 using Refactor_me.Data.Repositories;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
@@ -17,7 +18,7 @@ namespace Refactor_me.Controllers
         public ProductsController()
         {
             // TODO : This needs to be injected
-            _productService = new ProductService(new ProductRepository(), new ProductOptionRepository());
+            _productService = new ProductService(new ProductRepository(new ConnectionCreator()), new ProductOptionRepository(new ConnectionCreator()));
         }
 
         [Route]

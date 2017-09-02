@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Refactor_me.Data.Helpers;
 using Refactor_me.Data.Interfaces;
 
 namespace Refactor_me.Data.Repositories
@@ -11,9 +10,9 @@ namespace Refactor_me.Data.Repositories
     {
         private readonly IConnectionCreator _connectionCreator;
 
-        protected BaseRepository()
+        protected BaseRepository(IConnectionCreator connectionCreator)
         {
-            _connectionCreator = new ConnectionCreator();
+            _connectionCreator = connectionCreator;
         }
 
         public void Add(T entity)

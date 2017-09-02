@@ -1,12 +1,18 @@
 using System;
 using System.Data;
 using Refactor_me.Data.Helpers;
+using Refactor_me.Data.Interfaces;
 using Refactor_me.Models;
 
 namespace Refactor_me.Data.Repositories
 {
     public class ProductOptionRepository : BaseRepository<ProductOption>
     {
+        public ProductOptionRepository(IConnectionCreator connectionCreator)
+            : base(connectionCreator)
+        {
+        }
+
         protected override void Create(ProductOption newOption, IDbCommand command)
         {
             command.CommandText = @"insert into productoption (id, productid, name, description) values (@id, @productId, @name, @description)";

@@ -1,12 +1,18 @@
 using System;
 using System.Data;
 using Refactor_me.Data.Helpers;
+using Refactor_me.Data.Interfaces;
 using Refactor_me.Models;
 
 namespace Refactor_me.Data.Repositories
 {
     public class ProductRepository : BaseRepository<Product>
     {
+        public ProductRepository(IConnectionCreator connectionCreator)
+            : base(connectionCreator)
+        {
+        }
+
         protected override void Create(Product product, IDbCommand command)
         {
             command.CommandText =
