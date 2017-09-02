@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Refactor_me.Data.Interfaces;
-using Refactor_me.Data.Repositories;
 using Refactor_me.Models;
 using Refactor_me.Services.Interfaces;
 
@@ -12,9 +11,9 @@ namespace Refactor_me.Services.Services
     {
         private readonly IRepository<ProductOption> _productOptionRepository;
 
-        public ProductOptionsService()
+        public ProductOptionsService(IRepository<ProductOption> productOptionRepository)
         {
-            _productOptionRepository = new ProductOptionRepository();
+            _productOptionRepository = productOptionRepository;
         }
 
         public void AddNewOption(Guid productId, ProductOption newOption)

@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -110,6 +111,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\refactor-me.Data\refactor-me.Data.csproj">
+      <Project>{D27BA11D-2706-4282-B452-02F6D974BF58}</Project>
+      <Name>refactor-me.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
       <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>
       <Name>refactor-me.Models</Name>
