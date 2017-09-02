@@ -2,7 +2,7 @@ using Refactor_me.Services.Interfaces;
 using Refactor_me.Services.Services;
 using SimpleInjector;
 
-namespace Refactor_me
+namespace Refactor_me.IOC
 {
     public static class ServicesBootstrapper
     {

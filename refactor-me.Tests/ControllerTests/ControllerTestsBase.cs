@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Refactor_me;
 using Refactor_me.Controllers;
+using Refactor_me.IOC;
 using Refactor_me.Models;
 
 namespace refactor_me.Tests.ControllerTests
@@ -20,7 +21,7 @@ namespace refactor_me.Tests.ControllerTests
 
         protected ControllerTestsBase()
         {
-            IocConfig.InitialiseIoc();
+            IocConfig.Initialise();
             _productsController = IocConfig.IocContainer.GetInstance<ProductsController>();
             _productOptionsController = IocConfig.IocContainer.GetInstance<ProductOptionsController>();
         }

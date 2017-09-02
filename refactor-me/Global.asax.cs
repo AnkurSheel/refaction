@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Refactor_me.IOC;
 
 namespace Refactor_me
 {
@@ -7,7 +8,7 @@ namespace Refactor_me
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            IocConfig.InitialiseIocForWebApi();
+            IocConfig.InitialiseForWebApi(GlobalConfiguration.Configuration);
         }
     }
 }

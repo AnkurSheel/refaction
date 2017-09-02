@@ -4,7 +4,7 @@ using Refactor_me.Data.Repositories;
 using Refactor_me.Models;
 using SimpleInjector;
 
-namespace Refactor_me
+namespace Refactor_me.IOC
 {
     public static class DataBootstrapper
     {

@@ -3,13 +3,13 @@ using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 
-namespace Refactor_me
+namespace Refactor_me.IOC
 {
     public static class IocConfig
     {
         public static Container IocContainer { get; private set; }
 
-        public static void InitialiseIoc()
+        public static void Initialise()
         {
             IocContainer = new Container();
 
@@ -21,7 +21,7 @@ namespace Refactor_me
             IocContainer.Verify();
         }
 
-        public static void InitialiseIocForWebApi()
+        public static void InitialiseForWebApi(HttpConfiguration httpConfiguration)
         {
             IocContainer = new Container();
 
@@ -30,11 +30,11 @@ namespace Refactor_me
             DataBootstrapper.Bootstrap(IocContainer);
             ServicesBootstrapper.Bootstrap(IocContainer, Lifestyle.Scoped);
 
-            IocContainer.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+            IocContainer.RegisterWebApiControllers(httpConfiguration);
 
             IocContainer.Verify();
 
-            GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(IocContainer);
+            httpConfiguration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(IocContainer);
         }
     }
 }

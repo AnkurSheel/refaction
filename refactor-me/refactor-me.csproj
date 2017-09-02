@@ -86,14 +86,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ProductOptionsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="DataBootstrapper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IOCConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServicesBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -120,9 +117,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\refactor-me.Data\refactor-me.Data.csproj">
-      <Project>{D27BA11D-2706-4282-B452-02F6D974BF58}</Project>
-      <Name>refactor-me.Data</Name>
+    <ProjectReference Include="..\refactor-me.IOC\refactor-me.IOC.csproj">
+      <Project>{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}</Project>
+      <Name>refactor-me.IOC</Name>
     </ProjectReference>
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
       <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>

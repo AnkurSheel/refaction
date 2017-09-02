@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me", "refactor-me\refactor-me.csproj", "{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.Models", "refactor-me.Models\refactor-me.Models.csproj", "{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.Services", "refactor-me.Services\refactor-me.Services.csproj", "{80DF316F-68A8-4F36-BEA4-4FF9415ED510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me.IOC", "refactor-me.IOC\refactor-me.IOC.csproj", "{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +41,15 @@ Global
 		{80DF316F-68A8-4F36-BEA4-4FF9415ED510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80DF316F-68A8-4F36-BEA4-4FF9415ED510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80DF316F-68A8-4F36-BEA4-4FF9415ED510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E0C8B1-DB60-4B95-80FE-53F9E2F5223A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09CF0BFD-A9A2-4A35-8725-D160EC1C658D}
 	EndGlobalSection
 EndGlobal
