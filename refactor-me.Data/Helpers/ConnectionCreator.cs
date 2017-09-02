@@ -8,9 +8,9 @@ using System.Web;
 
 namespace Refactor_me.Data.Helpers
 {
-    public static class ConnectionCreator
+    public class ConnectionCreator : IConnectionCreator
     {
-        public static IDbConnection NewConnection()
+        public ConnectionCreator()
         {
             if (HttpContext.Current != null)
             {
@@ -20,7 +20,10 @@ namespace Refactor_me.Data.Helpers
             {
                 AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\");
             }
+        }
 
+        public IDbConnection GetOpenConnection()
+        {
             var connectionString = ConfigurationManager.ConnectionStrings["Database"];
             var providerName = connectionString.ProviderName;
             var factory = DbProviderFactories.GetFactory((string)providerName);

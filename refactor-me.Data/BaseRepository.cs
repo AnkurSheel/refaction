@@ -8,9 +8,16 @@ namespace Refactor_me.Data
     public abstract class BaseRepository<T> : IRepository<T>
         where T : new()
     {
+        private readonly IConnectionCreator _connectionCreator;
+
+        protected BaseRepository()
+        {
+            _connectionCreator = new ConnectionCreator();
+        }
+
         public void Add(T entity)
         {
-            using (var connection = ConnectionCreator.NewConnection())
+            using (var connection = _connectionCreator.GetOpenConnection())
             {
                 using (var command = connection.CreateCommand())
                 {
@@ -21,7 +28,7 @@ namespace Refactor_me.Data
 
         public IEnumerable<T> FindAll()
         {
-            using (var connection = ConnectionCreator.NewConnection())
+            using (var connection = _connectionCreator.GetOpenConnection())
             {
                 using (var command = connection.CreateCommand())
                 {
@@ -41,7 +48,7 @@ namespace Refactor_me.Data
 
         public T FindById(Guid id)
         {
-            using (var connection = ConnectionCreator.NewConnection())
+            using (var connection = _connectionCreator.GetOpenConnection())
             {
                 using (var command = connection.CreateCommand())
                 {
@@ -52,7 +59,7 @@ namespace Refactor_me.Data
 
         public void Remove(Guid id)
         {
-            using (var connection = ConnectionCreator.NewConnection())
+            using (var connection = _connectionCreator.GetOpenConnection())
             {
                 using (var command = connection.CreateCommand())
                 {
@@ -63,7 +70,7 @@ namespace Refactor_me.Data
 
         public void Update(Guid id, T updatedT)
         {
-            using (var connection = ConnectionCreator.NewConnection())
+            using (var connection = _connectionCreator.GetOpenConnection())
             {
                 using (var command = connection.CreateCommand())
                 {
