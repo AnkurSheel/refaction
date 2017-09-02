@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Refactor_me.Controllers;
+using Refactor_me.Data.Helpers;
+using Refactor_me.Data.Repositories;
 using Refactor_me.Models;
+using Refactor_me.Services.Services;
 
 namespace refactor_me.Tests.ControllerTests
 {
@@ -19,8 +22,13 @@ namespace refactor_me.Tests.ControllerTests
 
         protected ControllerTestsBase()
         {
-            ProductsController = new ProductsController();
-            ProductOptionsController = new ProductOptionsController();
+            var connectionCreator = new ConnectionCreator();
+            var productRepository = new ProductRepository(connectionCreator);
+            var productOptionRepository = new ProductOptionRepository(connectionCreator);
+            var productService = new ProductService(productRepository, productOptionRepository);
+            ProductsController = new ProductsController(productService);
+            var productOptionsService = new ProductOptionsService(productOptionRepository);
+            ProductOptionsController = new ProductOptionsController(productOptionsService);
         }
 
         protected virtual void SetupTestData()

@@ -68,9 +68,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\refactor-me.Data\refactor-me.Data.csproj">
+      <Project>{D27BA11D-2706-4282-B452-02F6D974BF58}</Project>
+      <Name>refactor-me.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
       <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>
       <Name>refactor-me.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\refactor-me.Services\refactor-me.Services.csproj">
+      <Project>{80DF316F-68A8-4F36-BEA4-4FF9415ED510}</Project>
+      <Name>refactor-me.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\refactor-me\refactor-me.csproj">
       <Project>{20ab69f9-f2d3-4a68-96c3-424ec8b9406e}</Project>
