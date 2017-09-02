@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Refactor_me;
 using Refactor_me.Controllers;
-using Refactor_me.Data.Helpers;
-using Refactor_me.Data.Repositories;
 using Refactor_me.Models;
-using Refactor_me.Services.Services;
 
 namespace refactor_me.Tests.ControllerTests
 {
@@ -15,20 +13,16 @@ namespace refactor_me.Tests.ControllerTests
         protected readonly Guid ProductId1 = new Guid("11111111-1111-1111-1111-111111111111");
         protected readonly Guid ProductId2 = new Guid("22222222-2222-2222-2222-222222222222");
         protected readonly Guid ProductId3 = new Guid("33333333-3333-3333-3333-333333333333");
-        protected readonly ProductOptionsController ProductOptionsController;
-        protected readonly ProductsController ProductsController;
+        protected readonly ProductOptionsController _productOptionsController;
+        protected readonly ProductsController _productsController;
 
         protected IList<Product> ProductsData;
 
         protected ControllerTestsBase()
         {
-            var connectionCreator = new ConnectionCreator();
-            var productRepository = new ProductRepository(connectionCreator);
-            var productOptionRepository = new ProductOptionRepository(connectionCreator);
-            var productService = new ProductService(productRepository, productOptionRepository);
-            ProductsController = new ProductsController(productService);
-            var productOptionsService = new ProductOptionsService(productOptionRepository);
-            ProductOptionsController = new ProductOptionsController(productOptionsService);
+            IocConfig.InitialiseIoc();
+            _productsController = IocConfig.IocContainer.GetInstance<ProductsController>();
+            _productOptionsController = IocConfig.IocContainer.GetInstance<ProductOptionsController>();
         }
 
         protected virtual void SetupTestData()
@@ -56,10 +50,10 @@ namespace refactor_me.Tests.ControllerTests
 
         protected void ClearDatabase()
         {
-            var products = ProductsController.GetAll();
+            var products = _productsController.GetAll();
             foreach (var product in products)
             {
-                ProductsController.Delete(product.Id);
+                _productsController.Delete(product.Id);
             }
         }
     }

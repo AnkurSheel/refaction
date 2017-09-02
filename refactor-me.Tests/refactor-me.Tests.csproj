@@ -47,9 +47,11 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -68,17 +70,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\refactor-me.Data\refactor-me.Data.csproj">
-      <Project>{D27BA11D-2706-4282-B452-02F6D974BF58}</Project>
-      <Name>refactor-me.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
       <Project>{56DF5AF0-5060-4A15-B600-22B9EE46A3A5}</Project>
       <Name>refactor-me.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\refactor-me.Services\refactor-me.Services.csproj">
-      <Project>{80DF316F-68A8-4F36-BEA4-4FF9415ED510}</Project>
-      <Name>refactor-me.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\refactor-me\refactor-me.csproj">
       <Project>{20ab69f9-f2d3-4a68-96c3-424ec8b9406e}</Project>

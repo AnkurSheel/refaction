@@ -18,16 +18,16 @@ namespace refactor_me.Tests.ControllerTests
             SetupTestData();
             foreach (var product in ProductsData)
             {
-                ProductsController.Create(product);
+                _productsController.Create(product);
             }
         }
 
         [TestMethod]
         public void ShouldCreateDataWhenCallCreateAndProductDoesNotExist()
         {
-            ProductsController.Create(_newProduct);
+            _productsController.Create(_newProduct);
 
-            var result = ProductsController.GetProduct(_newProduct.Id);
+            var result = _productsController.GetProduct(_newProduct.Id);
             Assert.AreEqual(_newProduct, result);
         }
 
@@ -35,20 +35,20 @@ namespace refactor_me.Tests.ControllerTests
         [ExpectedException(typeof(HttpResponseException))]
         public void ShouldDeleteProductAndAllItsOptionsWhenCallDeleteAndProductExists()
         {
-            ProductsController.Delete(ProductId1);
+            _productsController.Delete(ProductId1);
 
-            var options = ProductOptionsController.GetOptions(ProductId1).ToList();
+            var options = _productOptionsController.GetOptions(ProductId1).ToList();
 
-            Assert.IsNull(ProductsController.GetProduct(ProductId1));
+            Assert.IsNull(_productsController.GetProduct(ProductId1));
             Assert.AreEqual(0, options.Count);
         }
 
         [TestMethod]
         public void ShouldDoNothingWhenCallDeleteAndProductDoesNotExist()
         {
-            ProductsController.Delete(_newProduct.Id);
+            _productsController.Delete(_newProduct.Id);
 
-            var products = ProductsController.GetAll().ToList();
+            var products = _productsController.GetAll().ToList();
 
             Assert.AreEqual(ProductsData.Count, products.Count);
         }
@@ -56,9 +56,9 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldDoNothingWhenWhenCallUpdateAndProductDoesNotExist()
         {
-            ProductsController.Update(_newProduct.Id, _newProduct);
+            _productsController.Update(_newProduct.Id, _newProduct);
 
-            var products = ProductsController.GetAll().ToList();
+            var products = _productsController.GetAll().ToList();
 
             Assert.AreEqual(ProductsData.Count, products.Count);
         }
@@ -66,7 +66,7 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldGetCorrectDataWhenCallGetProductAndProductExists()
         {
-            var product = ProductsController.GetProduct(ProductId1);
+            var product = _productsController.GetProduct(ProductId1);
 
             var expect = ProductsData.AsQueryable().FirstOrDefault(p => p.Id == product.Id);
             Assert.AreEqual(expect, product);
@@ -75,7 +75,7 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldGetCorrectDataWhenCallSearchByNameAndProductExists()
         {
-            var products = ProductsController.SearchByName(ProductName1).ToList();
+            var products = _productsController.SearchByName(ProductName1).ToList();
             Assert.AreEqual(1, products.Count);
 
             var product = products.ElementAt(0);
@@ -86,7 +86,7 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldGetCorrectDataWhenGettingAllProducts()
         {
-            var products = ProductsController.GetAll().ToList();
+            var products = _productsController.GetAll().ToList();
 
             Assert.AreEqual(ProductsData.Count, products.Count);
 
@@ -100,7 +100,7 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldGetNoDataWhenCallSearchByNameAndProductDoesNotExist()
         {
-            var products = ProductsController.SearchByName("Invalid Name").ToList();
+            var products = _productsController.SearchByName("Invalid Name").ToList();
 
             Assert.AreEqual(0, products.Count);
         }
@@ -109,18 +109,18 @@ namespace refactor_me.Tests.ControllerTests
         [ExpectedException(typeof(HttpResponseException))]
         public void ShouldThrowExceptionWhenCallGetProductAndProductDoesNotExist()
         {
-            ProductsController.GetProduct(InvalidId);
+            _productsController.GetProduct(InvalidId);
         }
 
         [TestMethod]
         public void ShouldUpdateDataWhenCallCreateAndProductExists()
         {
-            var oldProduct = ProductsController.GetProduct(ProductId1);
+            var oldProduct = _productsController.GetProduct(ProductId1);
             oldProduct.Name = "NewName1";
 
-            ProductsController.Create(oldProduct);
+            _productsController.Create(oldProduct);
 
-            var result = ProductsController.GetProduct(ProductId1);
+            var result = _productsController.GetProduct(ProductId1);
 
             Assert.AreEqual(oldProduct, result);
         }
@@ -128,12 +128,12 @@ namespace refactor_me.Tests.ControllerTests
         [TestMethod]
         public void ShouldUpdateDataWhenWhenCallUpdateAndProductExists()
         {
-            var oldProduct = ProductsController.GetProduct(ProductId1);
+            var oldProduct = _productsController.GetProduct(ProductId1);
             _newProduct.Id = oldProduct.Id;
 
-            ProductsController.Update(oldProduct.Id, _newProduct);
+            _productsController.Update(oldProduct.Id, _newProduct);
 
-            var result = ProductsController.GetProduct(ProductId1);
+            var result = _productsController.GetProduct(ProductId1);
 
             Assert.AreEqual(_newProduct, result);
         }
