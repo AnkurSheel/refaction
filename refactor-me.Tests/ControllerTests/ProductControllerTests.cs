@@ -3,7 +3,7 @@ using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Refactor_me.Models;
 
-namespace Refactor_me.Tests
+namespace refactor_me.Tests.ControllerTests
 {
     [TestClass]
     public class ProductControllerTests : ControllerTestsBase

@@ -58,9 +58,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductControllerTests.cs" />
-    <Compile Include="ControllerTestsBase.cs" />
-    <Compile Include="ProductOptionsControllerTests.cs" />
+    <Compile Include="ControllerTests\ProductControllerTests.cs" />
+    <Compile Include="ControllerTests\ControllerTestsBase.cs" />
+    <Compile Include="ControllerTests\ProductOptionsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +77,7 @@
       <Name>refactor-me</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Database_Test.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

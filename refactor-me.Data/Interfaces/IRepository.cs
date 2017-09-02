@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Refactor_me.Data
+namespace Refactor_me.Data.Interfaces
 {
     public interface IRepository<T>
         where T : new()

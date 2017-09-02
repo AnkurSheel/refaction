@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Refactor_me.Data.Helpers
+namespace Refactor_me.Data.Interfaces
 {
     public interface IConnectionCreator
     {

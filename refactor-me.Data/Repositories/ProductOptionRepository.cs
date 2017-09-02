@@ -3,7 +3,7 @@ using System.Data;
 using Refactor_me.Data.Helpers;
 using Refactor_me.Models;
 
-namespace Refactor_me.Data
+namespace Refactor_me.Data.Repositories
 {
     public class ProductOptionRepository : BaseRepository<ProductOption>
     {

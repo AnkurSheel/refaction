@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using Refactor_me.Data.Helpers;
+using Refactor_me.Data.Interfaces;
 
-namespace Refactor_me.Data
+namespace Refactor_me.Data.Repositories
 {
     public abstract class BaseRepository<T> : IRepository<T>
         where T : new()

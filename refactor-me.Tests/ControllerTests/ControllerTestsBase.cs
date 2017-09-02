@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Refactor_me.Controllers;
 using Refactor_me.Models;
 
-namespace Refactor_me.Tests
+namespace refactor_me.Tests.ControllerTests
 {
     public class ControllerTestsBase
     {

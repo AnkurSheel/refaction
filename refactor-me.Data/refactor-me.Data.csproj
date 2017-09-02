@@ -39,12 +39,12 @@
   <ItemGroup>
     <Compile Include="Helpers\CommandExtensions.cs" />
     <Compile Include="Helpers\ConnectionCreator.cs" />
-    <Compile Include="Helpers\IConnectionCreator.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="ProductRepository.cs" />
-    <Compile Include="ProductOptionRepository.cs" />
+    <Compile Include="Interfaces\IConnectionCreator.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\ProductOptionRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\refactor-me.Models\refactor-me.Models.csproj">
