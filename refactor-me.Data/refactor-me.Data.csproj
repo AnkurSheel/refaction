@@ -39,7 +39,9 @@
   <ItemGroup>
     <Compile Include="Helpers\CommandExtensions.cs" />
     <Compile Include="Helpers\ConnectionCreator.cs" />
-    <Compile Include="ProductData.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductOptionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
