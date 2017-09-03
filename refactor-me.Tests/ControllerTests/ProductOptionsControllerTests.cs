@@ -8,7 +8,7 @@ using Refactor_me.Models;
 namespace refactor_me.Tests.ControllerTests
 {
     [TestClass]
-    public class Product_productOptionsControllerTests : ControllerTestsBase
+    public class ProductOptionsControllerTests : ControllerTestsBase
     {
         private readonly Guid _productOptionId1 = new Guid("55555555-5555-5555-5555-555555555555");
         private readonly Guid _productOptionId2 = new Guid("66666666-6666-6666-6666-666666666666");
